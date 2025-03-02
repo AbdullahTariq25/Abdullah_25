@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free IP Geolocation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-teal-700 font-serif italic overflow-auto hover:overflow-scroll" id="nav12345">
+    <nav class="bg-teal-900 h-24 flex justify-between items-center px-8">
+        <a href="web.html">
+            <img class="w-28" src="logo.png" alt="Logo">
+        </a>
+        <div class="flex space-x-4">
+            <div class="relative">
+                <button class="boxdrop text-xl text-slate-300 hover:text-teal-500" onclick="toggleDropdown('productsDropdown')">Products</button>
+                <div id="productsDropdown" class="dropdown-content hidden absolute bg-teal-800 text-slate-300 mt-2 rounded shadow-lg">
+                    <a href="#" class="block px-4 py-2 hover:bg-teal-700" onclick="showShop()">Shop</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-teal-700">IP Location API</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-teal-700">Astronomy API</a>
+                    <a href="#" class="block px-4 py-2 hover:bg-teal-700">Timezone API</a>
+                </div>
+            </div>
+            <button class="boxdrop text-xl text-slate-300 hover:text-teal-500">What is my IP?</button>
+            <button class="boxdrop text-xl text-slate-300 hover:text-teal-500">Pricing</button>
+            <button class="boxdrop text-xl text-slate-300 hover:text-teal-500">Documentation</button>
+            <button class="boxdrop text-xl text-slate-300 hover:text-teal-500">Blog</button>
+            <button class="boxdrop text-xl text-slate-300 hover:text-teal-500">Sign Up</button>
+            <button class="boxdrop text-xl text-slate-300 hover:text-teal-500">Sign In</button>
+        </div>
+    </nav>
+
+    <div onclick="closepopup()" class="flex flex-row">
+        <div class="w-[34rem] h-[20rem] bg-transparent ml-32 mt-16">
+            <h1 class="bg-transparent text-slate-300 text-[1.8rem] pb-[2rem]">Free IP Geolocation API and Accurate IP Lookup Database</h1>
+            <p class="text-xl pb-[20px] bg-transparent text-slate-300">
+                Free IP API provides country, city, state, province, local currency, latitude and longitude, company detail, ISP lookup, language, zip code, country calling code, time zone, current time, sunset and sunrise time, moonset and moonrise time from any IPv4 and IPv6 address in REST, JSON and XML format over HTTPS.
+            </p>
+            <button class="button1 w-[10rem] h-[3rem] active:text-teal-400 hover:text-teal-500 border-none text-slate-300 bg-teal-800 rounded-[15px]">Get Free API Access</button>
+        </div>
+        <div class="w-[34rem] ml-[3rem] h-[25rem] bg-teal-800 mt-16 rounded-[0.5rem] pt-[1rem]">
+            <p class="text-slate-300 bg-transparent ml-[2.5rem] mt-3">Enter any IPv4, IPv6 address or domain name:</p>
+            <input class="input1 outline-0 w-[22.6rem] h-[2rem] bg-teal-900 text-slate-300 rounded-[3rem] ml-[3rem] border-none ps-[20px] mt-3" type="text" placeholder="Enter any user ID">
+            <button class="relative left-[25rem] top-[-1.5rem] bg-teal-700 flex align-center justify-center pt-[4px] pr-[5px] h-[2.0rem] w-[50px] border-none rounded-r-xl mt-[-0.5rem]">
+                <img class="bg-transparent buttonimg2" src="search_25dp_BBCCCC_FILL0_wght400_GRAD0_opsz24.svg" alt="Search">
+            </button>
+            <div id="data" class="overflow-x-hidden overscroll-y-contain text-slate-300 w-[30rem] h-[16rem] text-left text-base bg-transparent pl-[55px]"></div>
+        </div>
+    </div>
+
+    <div class="box211 bg-teal-800 relative top-[-30rem] left-[7rem] w-[61.5rem] h-[28.9rem] p-[5px] rounded-[0.7rem] grid grid-cols-3" id="box211">
+        <div class="ml-[1px] mr-[10px]">
+            <h4 class="bg-transparent text-slate-200 font-semibold text-xl mb-[10px] mt-[10px]">Domain & IP Intelligence</h4>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">Whois API</h4>
+                Gain access to website ownership details, like registrar, name servers, etc.
+            </button>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">DNS API</h4>
+                Access a domain's IP from its A record & explore MX, NS & other records.
+            </button>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">Domain Availability API</h4>
+                Instantly check domain availability and explore potential suggestions.
+            </button>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">SSL Lookup API</h4>
+                Gain live insights into streaming SSL certificate details.
+            </button>
+        </div>
+        <div class="div4 ml-[4px] mr-[5px]">
+            <h4 class="bg-transparent text-slate-200 font-semibold text-xl mb-[10px] mt-[10px]">Domain Monitoring</h4>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">Domain Monitoring</h4>
+                Keep track of domains with real-time alerts and changes.
+            </button>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">Brand Monitoring</h4>
+                Protect your brand's reputation with robust brand monitoring services.
+            </button>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">Registrant Monitoring</h4>
+                Gain insights into domains from a specific registrar with Registrant Monitoring.
+            </button>
+        </div>
+        <div class="div4 ml-[5px] mr-[0px]">
+            <h4 class="bg-transparent text-slate-200 font-semibold text-xl mb-[10px] mt-[10px]">Data Feeds</h4>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">Newly Registered Domains</h4>
+                Get recently registered domains along with their Whois records & DNS details.
+            </button>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">Expiring & Dropped Domains</h4>
+                Keep track of expired domains in pending deletion or redemption status.
+            </button>
+            <button class="btn211 pl-[10px]">
+                <h4 class="text-slate-200 bg-transparent flex mb-[0px] mt-[0px]">Whois Database</h4>
+                Access comprehensive security insights with our extensive Whois database.
+            </button>
+        </div>
+    </div>
+
+    <div class="testimonials bg-teal-800 text-slate-300 p-8 mt-16 rounded-lg">
+        <h2 class="text-2xl font-semibold mb-4">User Testimonials</h2>
+        <div class="testimonial-item mb-4">
+            <p>"This service is amazing! It helped me find accurate IP information quickly."</p>
+            <span>- User A</span>
+        </div>
+        <div class="testimonial-item mb-4">
+            <p>"Highly recommend this API for anyone needing reliable geolocation data."</p>
+            <span>- User B</span>
+        </div>
+        <div class="testimonial-item">
+            <p>"Great customer support and easy to use."</p>
+            <span>- User C</span>
+        </div>
+    </div>
+
+    <!-- Main div for shop -->
+    <div id="shop" class="hidden bg-teal-800 text-slate-300 p-8 mt-16 rounded-lg">
+        <h2 class="text-2xl font-semibold mb-4">Shop</h2>
+        <p>Welcome to our shop! Here you can find various products related to IP geolocation and more.</p>
+        <!-- Add shop content here -->
+    </div>
+
+    <script src="style.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

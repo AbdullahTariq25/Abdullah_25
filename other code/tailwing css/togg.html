@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>toggleSwitch</title>
+    <link rel="stylesheet" href="togg.css">
+</head>
+
+<body>
+    <div class="">
+        <h1 class="h1"> Unlimited Fun </h1>
+        <p class="press">Press to change dureation</p>
+        <label onclick="opensecound() " class="switch">
+        <input  type="checkbox" id="toggleSwitch">
+        <span class="slider"></span>
+    </label></div>
+    <div class="divAll" id="divAll">
+        <div class="divAll1">
+            <div class="div1">
+                <h1 class="h22">silver </h1>
+                <hr>
+                <p class="h2">15$ </p>
+
+                <p class="p1"> Per Month </p>
+
+            </div>
+            <div class="div2">
+                <ul>
+                    <li>No Ad </li>
+                    <li>Free Downlodes al 220p </li>
+                    <li>
+                        unlinited watchs
+                    </li>
+                    <li>More Followers</li>
+                    <li>
+                        More Likes
+                    </li>
+                    <li>
+                        More Comments
+                    </li>
+
+                    <li>Increse watchs Time</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divAll1">
+            <div class="div1">
+                <h1 class="h22">Gold </h1>
+                <hr>
+                <p class="h2">30$ </p>
+
+                <p class="p1"> Per Month </p>
+
+            </div>
+            <div class="div2">
+                <ul>
+                    <li>No Ad </li>
+                    <li>Free Downlodes at 320p </li>
+                    <li>
+                        unlinited watchs
+                    </li>
+                    <li>More Followers</li>
+                    <li>
+                        More Likes
+                    </li>
+                    <li>
+                        More Comments
+                    </li>
+
+                    <li>Increse watchs Time</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divAll1">
+            <div class="div1">
+                <h1 class="h22">
+                    Palatinum
+                </h1>
+                <hr>
+                <p class="h2">45$ </p>
+
+                <p class="p1"> Per Month </p>
+
+            </div>
+            <div class="div2">
+                <ul>
+                    <li>No Ad </li>
+                    <li>Free Downlodes at all </li>
+                    <li>
+                        unlinited watchs
+                    </li>
+                    <li>More Followers</li>
+                    <li>
+                        More Likes
+                    </li>
+                    <li>
+                        Unlinited Family Members
+                    </li>
+
+                    <li>Much More</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- dureation 2 start-->
+    <div class="divsecound" id="divsecound">
+        <div class="divAll1">
+            <div class="div1">
+                <h1 class="h22">silver </h1>
+                <hr>
+                <p class="h2">155$ </p>
+
+                <p class="p1"> Per Year </p>
+
+            </div>
+            <div class="div2">
+                <ul>
+                    <li>No Ad </li>
+                    <li>Free Downlodes al 220p </li>
+                    <li>
+                        unlinited watchs
+                    </li>
+                    <li>More Followers</li>
+                    <li>
+                        More Likes
+                    </li>
+                    <li>
+                        More Comments
+                    </li>
+
+                    <li>Increse watchs Time</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divAll1">
+            <div class="div1">
+                <h1 class="h22">Gold </h1>
+                <hr>
+                <p class="h2">300$ </p>
+
+                <p class="p1"> Per Years </p>
+
+            </div>
+            <div class="div2">
+                <ul>
+                    <li>No Ad </li>
+                    <li>Free Downlodes at 320p </li>
+                    <li>
+                        unlinited watchs
+                    </li>
+                    <li>More Followers</li>
+                    <li>
+                        More Likes
+                    </li>
+                    <li>
+                        More Comments
+                    </li>
+
+                    <li>Increse watchs Time</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="divAll1">
+            <div class="div1">
+                <h1 class="h22">
+                    Palatinum
+                </h1>
+                <hr>
+                <p class="h2">450$ </p>
+
+                <p class="p1"> Per Years </p>
+
+            </div>
+            <div class="div2">
+                <ul>
+                    <li>No Ad </li>
+                    <li>Free Downlodes at all </li>
+                    <li>
+                        unlinited watchs
+                    </li>
+                    <li>More Followers</li>
+                    <li>
+                        More Likes
+                    </li>
+                    <li>
+                        Unlinited Family Members
+                    </li>
+
+                    <li>Much More</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    let secc = document.getElementById("divsecound");
+    let fir = document.getElementById("divAll");
+
+    function opensecound() {
+
+        if (fir.classList.toggle("open2")) {
+
+            fir.classList.toggle("open");
+            secc.classList.toggle("close2");
+            // fir.classList.remove("open2");
+            // secc.classList.remove("close");
+
+        }
+    }
+</script>
+</body>
+
+</html>

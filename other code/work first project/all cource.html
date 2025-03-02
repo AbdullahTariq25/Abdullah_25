@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course List</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .semester-button:hover, .category-button:hover, .status-button:hover {
+            background-color: #bfdbfe; /* Tailwind's blue-200 */
+            color: #1d4ed8; /* Tailwind's blue-700 */
+        }
+        .semester-button.active, .category-button.active, .status-button.active {
+            background-color: #1d4ed8; /* Tailwind's blue-700 */
+            color: white;
+        }
+        /* Custom styles for responsiveness */
+        @media (max-width: 640px) {
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                margin-left: 0;
+                margin-right: 0;
+            }
+            .nav-links a {
+                margin-bottom: 0.5rem;
+            }
+            .search-bar {
+                width: 100%;
+                margin-top: 1rem;
+            }
+            .course-list {
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+            }
+            .add-course-form {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+        @media (min-width: 640px) {
+            .nav-links {
+                flex-direction: row;
+                margin-left: 20rem;
+                margin-right: 3rem;
+            }
+            .search-bar {
+                width: auto;
+            }
+            .course-list {
+                width: 125%;
+                margin-left: -6rem;
+            }
+            .add-course-form {
+                width: 80%;
+                margin-left: 8rem;
+            }
+        }
+        @media (min-width: 768px) {
+            .course-list {
+                width: 100%;
+                margin-left: 0;
+            }
+            .add-course-form {
+                width: 80%;
+                margin-left: 0;
+            }
+        }
+        /* Additional styles for buttons */
+        .semester-button, .category-button, .status-button {
+            transition: background-color 0.3s, color 0.3s;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div id="app">
+        <nav class="sticky top-0 bg-white shadow-md z-50">
+            <div class="container mx-auto flex items-center justify-between py-4 px-8">
+                <!-- Logo -->
+                <a href="main.html" class="flex-shrink-0">
+                    <img src="img/default_name_pic.png" alt="Logo" class="ml-[rem] w-32">
+                </a>
+                <!-- Navigation Links -->
+                <div class="flex items-center ml-[20rem] mr-[3rem] space-x-6">
+                    <a href="main.html" class="text-base text-gray-500 hover:text-blue-700">Front Page</a>
+                    <a href="all cource.html" class="text-base text-blue-600 hover:text-blue-700">All Courses</a>
+                </div>
+                <!-- Search Bar -->
+                <form @submit.prevent="searchCourses" class="flex items-center h-[2.2rem] border rounded-sm px-3 py-1 w-42">
+                    <input 
+                        type="text" 
+                        v-model="searchQuery" 
+                        placeholder="Search Courses" 
+                        class="outline-none flex-grow text-gray-700 text-sm" 
+                    />
+                    <button type="submit">
+                        <img src="img/search blue.svg" alt="Search" class="w-5 h-5" />
+                    </button>
+                </form>
+                <!-- Download Button with Tooltip -->
+                <div class="relative group">
+                    <button class="text-base text-gray-600 hover:text-blue-500">Download the App</button>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 mb-2 bg-gray-800 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <img src="img/QR code.png" alt="QR Code" class="w-[10rem]" />
+                    </div>
+                </div>
+                <!-- User Profile -->
+                <img src="img/img logo.webp" alt="User Profile" class="w-8 h-8 rounded-full border mr-6 border-gray-200 ml-6" />
+                <!-- Study Space -->
+                <a href="index.html" class="bg-white border border-blue-400 text-blue-500 hover:bg-blue-400 hover:text-white px-4 py-1 rounded transition">Study Space</a>
+            </div>
+        </nav>
+        <div class="max-w-4xl mt-4 mx-auto">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-blue-600 text-xl font-bold mb-4">Course selection</h2>
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <span class="font-semibold mr-2">Course Semester:</span>
+                        <button class="semester-button bg-blue-100 text-blue-600 px-4 py-2 rounded active" onclick="toggleActiveSemester(this)">all</button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-700">
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">Second semester of the 2024-2025 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">First semester of the 2024-2025 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">Second semester of the 2023-2024 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">First semester of the 2023-2024 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">Second semester of the 2022-2023 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">First semester of the 2022-2023 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">Second semester of the 2021-2022 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">First semester of the 2021-2022 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">Second semester of the 2020-2021 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">First semester of the 2020-2021 academic year</button>
+                        <button class="semester-button px-4 py-2 rounded" onclick="toggleActiveSemester(this)">Second semester of the 2019-2020 academic year</button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <span class="font-semibold mr-2">Course Categories:</span>
+                        <button class="category-button bg-blue-100 text-blue-600 px-4 py-2 rounded active" onclick="toggleActiveCategory(this)">all</button>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="flex items-center mb-2">
+                        <span class="font-semibold mr-2">Course Status:</span>
+                        <button class="status-button bg-blue-100 text-blue-600 px-4 py-2 rounded active" onclick="toggleActiveStatus(this)">all</button>
+                        <button class="status-button ml-2 text-gray-700 px-4 py-2 rounded" onclick="toggleActiveStatus(this)">Upcoming</button>
+                        <button class="status-button ml-2 text-gray-700 px-4 py-2 rounded" onclick="toggleActiveStatus(this)">Current</button>
+                        <button class="status-button ml-2 text-gray-700 px-4 py-2 rounded" onclick="toggleActiveStatus(this)">Archived</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Course List -->
+            <div v-for="(course, index) in filteredCourses" :key="index" class="bg-white shadow-md rounded-lg overflow-hidden flex relative group flex-col sm:flex-row">
+                <div class="w-full sm:w-1/3 h-40 sm:h-52 flex items-center justify-center">
+                    <a :href="'exp.html?id=' + course.id">  
+                        <img :src="course.image || defaultImage" @error="e => e.target.src = defaultImage" :alt="course.title + ' Image'" class="w-full h-full object-cover rounded-lg" />
+                    </a>
+                </div>
+                <div class="p-4 w-full sm:w-2/3">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-xl group-hover:text-blue-400 font-bold">
+                            <a :href="'exp.html?id=' + course.id" class="text-blue-400 hover:underline">{{ course.title }}</a>
+                        </h3>
+                    </div>
+                    <div class="flex justify-between mt-2 items-center">
+                        <div class="text-gray-500 text-sm">
+                            <span class="mr-4"><i class="fas fa-user"></i> {{ course.instructor }}</span>
+                            <span class="mr-4"><i class="fas fa-eye"></i> Views: {{ course.views }}</span>
+                            <span class="mr-4"><i class="fas fa-users"></i> Selected: {{ course.selected }}</span>
+                            <span class="mr-4"><i class="fas fa-clock"></i> Duration: {{ course.duration }} hours</span>
+                            <span><i class="fas fa-graduation-cap"></i> Credits: {{ course.credits }}</span>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mt-2">{{ course.description }}</p>
+                    <div class="absolute right-0 top-0 h-full w-18 sm:w-24 bg-blue-600 flex items-center justify-center text-white text-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <img src="img/arrow_forward_24dp_E9EDED_FILL0_wght400_GRAD0_opsz24.svg" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- Form to Add New Course -->
+            <div class="m-4 mt-[8rem] w-[80%] ml-[8rem]">
+                <h2 class="text-xl font-semibold mb-4">Add New Course</h2>
+                <form @submit.prevent="addCourse" class="bg-white p-4 rounded-lg shadow-md">
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Title:</label>
+                        <input v-model="newCourse.title" type="text" class="border rounded w-full p-2" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Description:</label>
+                        <textarea v-model="newCourse.description" class="border rounded w-full p-2" required></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Instructor:</label>
+                        <input v-model="newCourse.instructor" type="text" class="border rounded w-full p-2" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Duration (hours):</label>
+                        <input v-model.number="newCourse.duration" type="number" class="border rounded w-full p-2" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Image URL:</label>
+                        <input v-model="newCourse.image" type="text" class="border rounded w-full p-2" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Views:</label>
+                        <input v-model.number="newCourse.views" type="number" class="border rounded w-full p-2" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Selected:</label>
+                        <input v-model.number="newCourse.selected" type="number" class="border rounded w-full p-2" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Credits:</label>
+                        <input v-model.number="newCourse.credits" type="number" class="border rounded w-full p-2" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Category:</label>
+                        <input v-model="newCourse.category" type="text" class="border rounded w-full p-2" required />
+                    </div>
+                    <button type="submit" class="bg-blue-500 text-white p-2 rounded">Add Course</button>
+                </form>
+            </div>
+        </div>
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-gray-300 w-[154%] ml-[-14.8rem] mt-[5rem] p-8 py-10">
+            <div class="container mx-auto px-4 text-left">
+                <h1 class="text-2xl font-semibold text-gray-300 mb-4">Shenzhen Vocational College of Information Technology</h1>
+                <div class="flex items-center mb-6">
+                    <div class="w-1 h-6 bg-blue-400 mr-2"></div>
+                    <p class="text-gray-400">Platform services and technical support</p>
+                </div>
+                <div class="flex flex-col md:flex-row justify-start items-start space-y-6 md:space-y-0 md:space-x-12">
+                    <div class="flex items-center space-x-2">
+                        <div class="border border-gray-400 p-4 rounded-full flex items-center justify-center w-16 h-16">
+                            <i class="fas fa-phone-alt text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-100">CALL</p>
+                            <p class="text-gray-300">400-689-1199</p>
+                            <p class="text-gray-300">010-8215-2530</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="border border-gray-400 p-4 rounded-full flex items-center justify-center w-16 h-16">
+                            <i class="fas fa-envelope text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-100">MAIL</p>
+                            <p class="text-gray-300">bsupport@xuetangx.com</p>
+                            <p class="text-gray-300">creditcourse@xuetangx.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="border border-gray-400 p-4 rounded-full flex items-center justify-center w-16 h-16">
+                            <i class="fas fa-clock text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-100">WORK TIME</p>
+                            <p class="text-gray-300">Working Day</p>
+                            <p class="text-gray-300">9:00-18:00</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6 border-gray-600">
+                <p class="text-left text-gray-500 text-sm">
+                    Copyright 2013-2024 Beijing ICP No. 14019655 | 
+                    <i class="fas fa-shield-alt text-orange-500"></i> 
+                    Beijing Public Security Network No. 11010802033052 | 
+                    Beijing Muhua Information Technology Co., Ltd.
+                </p>
+            </div>
+        </footer>
+    </div>
+  
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                searchQuery: '',
+                newCourse: {
+                    title: '',
+                    description: '',
+                    instructor: '',
+                    duration: 0,
+                    image: '',
+                    views: 0,
+                    selected: 0,
+                    credits: 0,
+                    category: '', // Added category property
+                },
+                defaultImage: 'https://via.placeholder.com/150',
+                courses: [
+                    {
+                        id: 1,
+                        title: 'Practical Chinese',
+                        description: 'A public elective course aimed at improving language skills and cultural understanding.',
+                        instructor: 'Dr. Wang',
+                        duration: 30,
+                        views: 3258,
+                        selected: 7723,
+                        credits: 2,
+                        image: 'https://www.allmandarin.com/wp-content/uploads/2014/03/Reception.jpg',
+                        category: 'Language', // Added category property
+                    },
+                    {
+                        id: 2,
+                        title: 'Military Theory',
+                        description: 'A detailed exploration of military strategies and principles.',
+                        instructor: 'Col. Zhang',
+                        duration: 40,
+                        views: 1240,
+                        selected: 5454,
+                        credits: 2,
+                        image: 'https://storage.googleapis.com/a1aa/image/gip5ovrUDOqNJ1lTbs5XxxJq34zEEnYfHQn0zCgPfud6oQCUA.jpg',
+                        category: 'Military', // Added category property
+                    },
+                    {
+                        id: 3,
+                        title: 'Introduction to Artificial Intelligence',
+                        description: 'A detailed exploration of AI concepts and applications.',
+                        instructor: 'Dr. Li',
+                        duration: 50,
+                        views: 2500,
+                        selected: 3000,
+                        credits: 3,
+                        image: 'https://miro.medium.com/v2/resize:fit:900/1*57YDg0EsnSBYsTnwYPkSDg.jpeg',
+                        category: 'Technology', // Added category property
+                    },
+                    {
+                        id: 4,
+                        title: 'Introduction to the Basic Principles of Marxism',
+                        description: 'An overview of Marxist theory and its applications.',
+                        instructor: 'Dr. Chen',
+                        duration: 45,
+                        views: 1800,
+                        selected: 2500,
+                        credits: 2,
+                        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGOqnf0w-qoOTKaX8OoT6wswlmFVslX_Wj7Q&s',
+                        category: 'Philosophy', // Added category property
+                    },
+                    {
+                        id: 5,
+                        title: 'Applied Mathematics',
+                        description: 'Advanced mathematical concepts and their applications.',
+                        instructor: 'Prof. Zhao',
+                        duration: 55, 
+                        views: 3000,
+                        selected: 4000,
+                        credits: 4,
+                        image: 'https://s3-ap-south-1.amazonaws.com/ricedigitals3bucket/AUPortalContent/2020/07/10101336/imgblogmaths3.jpg',
+                        category: 'Mathematics', // Added category property
+                    },
+                    {
+                        id: 6,
+                        title: 'Practical Writing',
+                        description: 'Skills and techniques for effective writing.',
+                        instructor: 'Dr. Wang',
+                        duration: 35,
+                        views: 2200,
+                        selected: 3500,
+                        credits: 2,
+                        image: 'https://s39613.pcdn.co/wp-content/uploads/2020/05/Six-Practical-Approaches-for-Teaching-Writing-Online.jpg',
+                        category: 'Language', // Added category property
+                    },
+                    {
+                        id: 7,
+                        title: 'Outing and Switching Equipment Management',
+                        description: 'Management of outdoor and switching equipment.',
+                        instructor: 'Col. Zhang',
+                        duration: 40,
+                        views: 1500,
+                        selected: 2000,
+                        credits: 2,
+                        image: 'https://www.cisco.com/c/dam/assets/swa/img/anchor-info/what-is-network-switching-628x353.png',
+                        category: 'Technology', // Added category property
+                    },
+                    {
+                        id: 8,
+                        title: 'Font Design',
+                        description: 'Designing and creating fonts.',
+                        instructor: 'Dr. Li',
+                        duration: 45,
+                        views: 1900,
+                        selected: 2400,
+                        credits: 3,
+                        image: 'https://miro.medium.com/v2/resize:fit:1400/1*coEM-LSsVWqweKeWHYCMHg.jpeg',
+                        category: 'Art', // Added category property
+                    },
+                    {
+                        id: 9,
+                        title: 'Windows Operating System Server Management',
+                        description: 'Managing Windows server systems.',
+                        instructor: 'Prof. Zhao',
+                        duration: 50,
+                        views: 2800,
+                        selected: 3800,
+                        credits: 4,
+                        image: 'https://d2cest1yk6hx2d.cloudfront.net/uninets-001/store/1619/blog/Learn-Windows-Server-Fundamentals.jpg',
+                        category: 'Technology', // Added category property
+                    },
+                ],
+                isMobileMenuOpen: false,
+            },
+            computed: {
+                filteredCourses() {
+                    return this.courses.filter(course => 
+                        course.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+                    );
+                }
+            },
+            methods: {
+                searchCourses() {
+                    // Search functionality is handled by the computed property
+                },
+                addCourse() {
+                    if (this.newCourse.title && this.newCourse.description && this.newCourse.instructor && this.newCourse.duration && this.newCourse.views && this.newCourse.selected && this.newCourse.credits && this.newCourse.category) {
+                        this.courses.push({
+                            id: this.courses.length + 1,
+                            title: this.newCourse.title,
+                            description: this.newCourse.description,
+                            instructor: this.newCourse.instructor,
+                            duration: this.newCourse.duration,
+                            image: this.newCourse.image || this.defaultImage,
+                            views: this.newCourse.views,
+                            selected: this.newCourse.selected,
+                            credits: this.newCourse.credits,
+                            category: this.newCourse.category, // Added category property
+                        });
+                        this.newCourse = {
+                            title: '',
+                            description: '',
+                            instructor: '',
+                            duration: 0,
+                            image: '',
+                            views: 0,
+                            selected: 0,
+                            credits: 0,
+                            category: '', // Reset category property
+                        };
+                    } else {
+                        alert('Please fill in all required fields.');
+                    }
+                },
+                toggleMobileMenu() {
+                    this.isMobileMenuOpen = !this.isMobileMenuOpen;
+                },
+            },
+        });
+    
+        function toggleActiveSemester(button) {
+            // Remove active class from all semester buttons
+            document.querySelectorAll('.semester-button').forEach(btn => btn.classList.remove('active'));
+            // Add active class to the clicked button
+            button.classList.add('active');
+        }
+    
+        function toggleActiveCategory(button) {
+            // Remove active class from all category buttons
+            document.querySelectorAll('.category-button').forEach(btn => btn.classList.remove('active'));
+            // Add active class to the clicked button
+            button.classList.add('active');
+        }
+    
+        function toggleActiveStatus(button) {
+            // Remove active class from all status buttons
+            document.querySelectorAll('.status-button').forEach(btn => btn.classList.remove('active'));
+            // Add active class to the clicked button
+            button.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

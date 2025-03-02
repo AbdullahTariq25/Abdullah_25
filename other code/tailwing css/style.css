@@ -1,0 +1,136 @@
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+}
+
+/* Box Visibility */
+.box211 {
+    visibility: hidden;
+}
+
+.box211-hidden {
+    visibility: hidden;
+}
+
+.box211-visible {
+    visibility: visible;
+}
+
+.boxdrop:hover~.box211 {
+    visibility: visible;
+}
+
+/* Popup Visibility */
+.bur {
+    visibility: hidden;
+}
+
+.bur-hidden {
+    visibility: hidden;
+}
+
+.bur-visible {
+    visibility: visible;
+}
+
+/* Button Styles */
+.btn211 {
+    border-radius: .7rem;
+    text-align: left;
+    border-style: none;
+    margin-top: 4px;
+    background-color: #0a6e6b;
+    color: rgb(153, 190, 176);
+    width: 20rem;
+    height: 6rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+}
+
+.btn211:hover {
+    background-color: #26807a;
+}
+
+.btn211:active {
+    background-color: #107c75;
+}
+
+/* Dropdown Menu */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #0a6e6b;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #f1f1f1;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #26807a;
+}
+
+/* Testimonials Section */
+.testimonials {
+    background-color: #0a6e6b;
+    color: #99beb0;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    margin-top: 2rem;
+}
+
+.testimonial-item {
+    margin-bottom: 1rem;
+}
+
+.testimonial-item p {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.testimonial-item span {
+    font-size: 1rem;
+    color: #ccc;
+}
+
+/* Shop Section */
+#shop {
+    display: none;
+}
+
+/* Ensure no extra margins or padding on body and html */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Hide horizontal overflow */
+}
+
+/* Ensure no elements cause overflow */
+.container, .plans, .box211, .testimonials, #shop {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+/* Additional styles for other elements */
+.navbar {
+    width: 100%;
+    overflow: hidden;
+}
