@@ -11,7 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
-     <title>Document</title>
+    <link rel="icon" type="image/jpeg" href="/portfolio/other code/img/ABBY.jpg">
+     <title>ABBY</title>
+
     <style>
         html {
             scroll-behavior: smooth;
@@ -33,6 +35,72 @@
         .alert.error {
             background-color: #f44336;
         }
+
+     
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: #b6ffe1;
+            color: #333;
+        }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;   
+            padding: 20px;
+        }
+        header {
+            background: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px;
+        
+            text-decoration: none;
+        }
+        .hero {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+        .project {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .contact {
+            text-align: center;
+            padding: 20px;
+        }
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero {
+                padding: 20px;
+            }
+            .projects {
+                grid-template-columns: 1fr;
+            }
+        }
+    
     </style>
 
 </head>
@@ -121,32 +189,32 @@ xl
 
         </nav>
 
-
         <div class="   grid grid-cols-2">
             <div>
+                   
                 <div class="pl-[2rem]   md:pl-[5rem] lg:pl-[7rem]  xl:pl-[15rem]   pt-[3rem]">
                     <h1 class="h1  bg-transparent drop-shadow  ">Hi, </h1>
                     <h1 class="h1 drop-shadow  ">I'am <strong class="sstrong">ABDULLAH TARIQ</strong> </h1>
                     <h1 class="h1  drop-shadow ">Web Designer</h1>
-                </div>
-            
-                <div>
-                    <a href="comprassed/ABBY-2/Portfolio2.html">
-                        <button class="w-[4rem] h-[4rem] md:ml-[7rem] xl:ml-[15rem] bg-green-400 rounded-full fixed top-[18rem] left-[-13rem] hover:bg-green-700 hover:text-green-200">
-                            <i class="fa fa-arrow-left"></i>
-                        </button>
-                    </a>
-                
-                    <a href="comprassed/ABBY-1/portfolio 1.html">
-                        <button class="w-[4rem] h-[4rem] md:ml-[7rem] xl:ml-[15rem] bg-green-400 rounded-full fixed top-[18rem] right-[2rem] hover:bg-green-700 hover:text-green-200">
-                            <i class="fa fa-arrow-right"></i>
-                        </button>
-                    
-                    </a>
 
                 </div>
 
+        
 
+<!-- Left Navigation Button -->
+<a href="comprassed/ABBY-2/Portfolio2.html">
+    <button class="fixed left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-green-400 rounded-full hover:bg-green-700 hover:text-green-200 z-[9999]">
+      <i class="fa fa-arrow-left"></i>
+    </button>
+  </a>
+  
+  <!-- Right Navigation Button -->
+  <a href="comprassed/ABBY-1/portfolio 1.html">
+    <button class="fixed right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 md:w-12 md:h-12 bg-green-400 rounded-full hover:bg-green-700 hover:text-green-200 z-[9999]">
+      <i class="fa fa-arrow-right"></i>
+    </button>
+  </a>
+  
 
 
                 <div class="flex flex-row lg:pl-[7rem]  md:pl-[4rem] xl:pl-[14rem]  pl-[1.5rem] pt-[3rem]">
@@ -443,27 +511,63 @@ xl
         <div>
             <h1 class="text-5xl font-bold lg:ml-[30rem] md:ml-[18rem] xl:ml-[38rem]  ml-[5rem] underline-offset-8">Contact</h1>
         </div>
-
-        <div>
-            <form @submit="sendEmail">
-                <div class="search ml-[1rem]  lg:ml-[27rem] xl:ml-[34rem] md:ml-[13rem]  mt-[5rem]">
-                    <input class="input pl-[2rem]  pr-[2rem]  w-[20rem] h-[4rem]  rounded-3xl" type="text" v-model="name" placeholder="Name">
-                </div>
-
-                <div class="ml-[1rem] lg:ml-[27rem] md:ml-[13rem] xl:ml-[34rem] mt-[2rem]">
-                    <input class="input  pl-[2rem]  pr-[2rem]  w-[20rem] h-[4rem]  rounded-3xl" type="email" v-model="email" placeholder="Email">
-                </div>
-
-                <div class="ml-[1rem] lg:ml-[27rem] md:ml-[13rem]  xl:ml-[34rem]  mt-[2rem]">
-                    <textarea v-model="message" placeholder="Say something about me that you want to ask..." class="textarea pl-[2rem]  pt-[1rem] pr-[2rem] w-[20rem] h-[15rem] rounded-3xl"></textarea>
-                </div>
-
-                <div class="ml-[1rem] lg:ml-[27rem] md:ml-[13rem] xl:ml-[34rem] mt-[2rem]">
-                    <input class="submit h-[4rem] rounded-3xl" type="submit" value="Send">
-                </div>
+        <div class="z-0 w-full max-w-md md:max-w-lg lg:max-w-2xl mx-auto px-4 py-8">
+            <form @submit.prevent="sendEmail" class="space-y-6">
+              <!-- Name Input -->
+              <div class="form-group">
+                <label for="name" class="sr-only">Your Name</label>
+                <input 
+                  id="name"
+                  v-model="name"
+                  type="text"
+                  placeholder="Name"
+                  class="w-full h-12 md:h-16 px-4 md:px-6 py-3 text-lg rounded-3xl border-2 border-emerald-100 
+                         focus:border-emerald-400 focus:ring-2 ring-emerald-200 transition-all duration-300 outline-none"
+                  required
+                  aria-required="true"
+                >
+              </div>
+          
+              <!-- Email Input -->
+              <div class="form-group">
+                <label for="email" class="sr-only">Your Email</label>
+                <input 
+                  id="email"
+                  v-model="email"
+                  type="email"
+                  placeholder="Email"
+                  class="w-full h-12 md:h-16 px-4 md:px-6 py-3 text-lg rounded-3xl border-2 border-emerald-100 
+                         focus:border-emerald-400 focus:ring-2 ring-emerald-200 transition-all duration-300 outline-none"
+                  required
+                  aria-required="true"
+                >
+              </div>
+          
+              <!-- Message Textarea -->
+              <div class="form-group">
+                <label for="message" class="sr-only">Your Message</label>
+                <textarea 
+                  id="message"
+                  v-model="message"
+                  placeholder="Say something you'd like to ask or share..."
+                  class="w-full h-40 md:h-60 px-4 md:px-6 py-3 md:py-4 text-lg rounded-3xl border-2 border-emerald-100 
+                         focus:border-emerald-400 focus:ring-2 ring-emerald-200 transition-all duration-300 outline-none resize-none"
+                  required
+                  aria-required="true"
+                ></textarea>
+              </div>
+          
+              <!-- Submit Button -->
+              <button 
+                type="submit"
+                class="w-full h-12 md:h-16 bg-emerald-400 hover:bg-emerald-500 text-white font-semibold text-lg rounded-3xl 
+                       transition-colors duration-300 flex items-center justify-center"
+              >
+                Send Message
+              </button>
             </form>
-        </div>
-
+          </div>
+                            
     </section>
     <footer class=" bg-emerald-300 h-[15rem] mt-[5rem]">
         <div class=" ">

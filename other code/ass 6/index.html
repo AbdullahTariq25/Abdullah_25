@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gradient-to-r from-purple-600 to-blue-500 mt-56 mb-56">
+    <div class="bg-white p-4 rounded-lg shadow-lg max-w-md w-full mt-10">
+        <img src="img1.webp" alt="Logo" class="w-20 h-20 mx-auto mb-4">
+        <h2 class="text-xl font-bold text-center text-gray-800 mb-4">Register</h2>
+        <form id="registrationForm" class="space-y-4">
+            <div class="form-group">
+                <label for="username" class="block text-gray-700 font-bold">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+                <span class="text-red-500 text-sm hidden" id="usernameError">Please enter your username.</span>
+            </div>
+            <fieldset class="form-group">
+                <legend class="block text-gray-700 font-bold">Gender</legend>
+                <div class="flex items-center">
+                    <label class="mr-4"><input type="radio" name="gender" value="male" required> Male</label>
+                    <label><input type="radio" name="gender" value="female"> Female</label>
+                </div>
+            </fieldset>
+            <div class="form-group">
+                <label for="address" class="block text-gray-700 font-bold">Home Address</label>
+                <input type="text" id="address" placeholder="Enter your home address" required class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+            <div class="form-group">
+                <label for="phone" class="block text-gray-700 font-bold">Contact Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter your phone number" required pattern="[0-9]{10}" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+            <div class="form-group">
+                <label for="password" class="block text-gray-700 font-bold">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required minlength="8" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+                <span class="text-red-500 text-sm hidden" id="passwordError">Please enter your password.</span>
+            </div>
+            <div class="form-group">
+                <label class="block text-gray-700 font-bold">Personal Hobbies</label>
+                <div class="flex flex-col">
+                    <label class="flex items-center"><input type="checkbox" value="reading" class="mr-2"> Reading</label>
+                    <label class="flex items-center"><input type="checkbox" value="traveling" class="mr-2"> Traveling</label>
+                    <label class="flex items-center"><input type="checkbox" value="gaming" class="mr-2"> Gaming</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="securityQuestion" class="block text-gray-700 font-bold">Password Retrieval Question</label>
+                <input type="text" id="securityQuestion" placeholder="Enter your security question" required class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+            <div class="form-group">
+                <label for="securityAnswer" class="block text-gray-700 font-bold">Password Retrieval Answer</label>
+                <input type="text" id="securityAnswer" placeholder="Enter your answer" required class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword" class="block text-gray-700 font-bold">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password" required aria-label="Confirm Password" class="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600">
+                <span class="text-red-500 text-sm hidden" id="confirmPasswordError">Passwords do not match.</span>
+            </div>
+            <button type="submit" class="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600">Register</button>
+            <div class="loading-spinner hidden mx-auto mt-4 border-4 border-t-4 border-purple-600 rounded-full w-6 h-6 animate-spin"></div>
+        </form>
+        <div class="text-center mt-4">
+            <p class="text-gray-700">Already have an account? <a href="login.html" class="text-purple-600 hover:underline">Login</a></p>
+        </div>
+    </div>
+
+    <div id="successPopup" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-4">Registration Successful!</h2>
+            <p class="text-center text-gray-700 mb-4">Your account has been created successfully.</p>
+            <button id="closePopup" class="w-full bg-purple-600 text-white p-2 rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const registerForm = document.getElementById('registrationForm');
+        const username = document.getElementById('username');
+        const genderInputs = document.querySelectorAll('input[name="gender"]');
+        const address = document.getElementById('address');
+        const phone = document.getElementById('phone');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const hobbiesInputs = document.querySelectorAll('input[type="checkbox"]');
+        const securityQuestion = document.getElementById('securityQuestion');
+        const securityAnswer = document.getElementById('securityAnswer');
+        const usernameError = document.getElementById('usernameError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        const spinner = document.querySelector('.loading-spinner');
+        const button = registerForm.querySelector('button');
+        const successPopup = document.getElementById('successPopup');
+        const closePopup = document.getElementById('closePopup');
+
+        registerForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            let valid = true;
+
+            if (!username.value.trim()) {
+                usernameError.classList.remove('hidden');
+                username.classList.add('animate-shake');
+                valid = false;
+            } else {
+                usernameError.classList.add('hidden');
+            }
+
+            if (!password.value.trim()) {
+                passwordError.classList.remove('hidden');
+                password.classList.add('animate-shake');
+                valid = false;
+            } else {
+                passwordError.classList.add('hidden');
+            }
+
+            if (password.value !== confirmPassword.value) {
+                confirmPasswordError.classList.remove('hidden');
+                confirmPassword.classList.add('animate-shake');
+                valid = false;
+            } else {
+                confirmPasswordError.classList.add('hidden');
+            }
+
+            if (!valid) return;
+
+            spinner.classList.remove('hidden');
+            button.disabled = true;
+
+            setTimeout(() => {
+                spinner.classList.add('hidden');
+                button.disabled = false;
+
+                const gender = Array.from(genderInputs).find(input => input.checked)?.value || '';
+                const hobbies = Array.from(hobbiesInputs).filter(input => input.checked).map(input => input.value).join(', ');
+
+                
+                localStorage.setItem('username', username.value);
+                localStorage.setItem('gender', gender);
+                localStorage.setItem('address', address.value);
+                localStorage.setItem('phone', phone.value);
+                localStorage.setItem('password', password.value);
+                localStorage.setItem('hobbies', hobbies);
+                localStorage.setItem('securityQuestion', securityQuestion.value);
+                localStorage.setItem('securityAnswer', securityAnswer.value);
+                successPopup.classList.remove('hidden');
+            }, 2000);
+        });
+
+        username.addEventListener('animationend', () => username.classList.remove('animate-shake'));
+        password.addEventListener('animationend', () => password.classList.remove('animate-shake'));
+        confirmPassword.addEventListener('animationend', () => confirmPassword.classList.remove('animate-shake'));
+
+        closePopup.addEventListener('click', () => {
+            successPopup.classList.add('hidden');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

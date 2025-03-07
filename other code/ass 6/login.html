@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center h-screen">
+    <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full animate-fadeIn">
+        <img src="img1.webp" alt="Company Logo" class="w-24 h-24 mx-auto mb-6 rounded-full">
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Login</h2>
+        <form id="loginForm" class="space-y-6">
+            <div class="form-group">
+                <label for="username" class="block text-gray-700">Username</label>
+                <input type="text" id="username" placeholder="Enter your username" required aria-label="Username" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <span class="text-red-500 text-sm hidden" id="usernameError">Please enter your username.</span>
+            </div>
+            <div class="form-group">
+                <label for="password" class="block text-gray-700">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required aria-label="Password" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <span class="text-red-500 text-sm hidden" id="passwordError">Please enter your password.</span>
+            </div>
+            <div class="form-group text-right">
+                <a href="find-back-password.html" id="forgotPasswordLink" class="text-blue-500 hover:underline">Forgot Password?</a>
+            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-500">Login</button>
+            <div class="loading-spinner hidden mx-auto mt-4 border-4 border-t-4 border-blue-500 rounded-full w-8 h-8 animate-spin"></div>
+        </form>
+        <div class="text-center mt-6">
+            <p class="text-gray-700">Don't have an account? <a href="index.html" class="text-blue-500 hover:underline">Register</a></p>
+        </div>
+    </div>
+
+    <div id="forgotPasswordModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Reset Password</h2>
+            <form id="forgotPasswordForm" class="space-y-6">
+                <div class="form-group">
+                    <label for="resetUsername" class="block text-gray-700">Username</label>
+                    <input type="text" id="resetUsername" placeholder="Enter your username" required aria-label="Username" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <span class="text-red-500 text-sm hidden" id="resetUsernameError">Please enter your username.</span>
+                </div>
+                <div class="form-group">
+                    <label id="securityQuestionLabel" class="block text-gray-700"></label>
+                    <input type="text" id="securityQuestion" placeholder="Answer the security question" required aria-label="Security Question" class="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <span class="text-red-500 text-sm hidden" id="securityQuestionError">Please answer the security question.</span>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-500">Reset Password</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const usernameError = document.getElementById('usernameError');
+        const passwordError = document.getElementById('passwordError');
+        const spinner = document.querySelector('.loading-spinner');
+        const button = loginForm.querySelector('button');
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+        const resetUsername = document.getElementById('resetUsername');
+        const resetUsernameError = document.getElementById('resetUsernameError');
+        const securityQuestionLabel = document.getElementById('securityQuestionLabel');
+        const securityQuestion = document.getElementById('securityQuestion');
+        const securityQuestionError = document.getElementById('securityQuestionError');
+
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            let valid = true;
+
+            if (!username.value.trim()) {
+                usernameError.classList.remove('hidden');
+                username.classList.add('animate-shake');
+                valid = false;
+            } else {
+                usernameError.classList.add('hidden');
+            }
+
+            if (!password.value.trim()) {
+                passwordError.classList.remove('hidden');
+                password.classList.add('animate-shake');
+                valid = false;
+            } else {
+                passwordError.classList.add('hidden');
+            }
+
+            if (!valid) return;
+
+            spinner.classList.remove('hidden');
+            button.disabled = true;
+
+            setTimeout(() => {
+                spinner.classList.add('hidden');
+                button.disabled = false;
+          
+                const savedUsername = localStorage.getItem('username');
+                const savedPassword = localStorage.getItem('password');
+                if (username.value === savedUsername && password.value === savedPassword) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Invalid username or password');
+                }
+            }, 2000);
+        });
+
+        username.addEventListener('animationend', () => username.classList.remove('animate-shake'));
+        password.addEventListener('animationend', () => password.classList.remove('animate-shake'));
+
+        forgotPasswordLink.addEventListener('click', () => {
+            forgotPasswordModal.classList.remove('hidden');
+        });
+
+        resetUsername.addEventListener('input', () => {
+            const savedUsername = localStorage.getItem('username');
+            const savedSecurityQuestion = localStorage.getItem('securityQuestion'); // Assuming the security question is stored in localStorage
+            if (resetUsername.value === savedUsername) {
+                securityQuestionLabel.textContent = savedSecurityQuestion;
+            } else {
+                securityQuestionLabel.textContent = 'Security Question';
+            }
+        });
+
+        forgotPasswordForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            let valid = true;
+
+            if (!resetUsername.value.trim()) {
+                resetUsernameError.classList.remove('hidden');
+                resetUsername.classList.add('animate-shake');
+                valid = false;
+            } else {
+                resetUsernameError.classList.add('hidden');
+            }
+
+            if (!securityQuestion.value.trim()) {
+                securityQuestionError.classList.remove('hidden');
+                securityQuestion.classList.add('animate-shake');
+                valid = false;
+            } else {
+                securityQuestionError.classList.add('hidden');
+            }
+
+            if (!valid) return;
+
+            const savedUsername = localStorage.getItem('username');
+            const savedSecurityAnswer = localStorage.getItem('securityAnswer'); // Assuming the security answer is stored in localStorage
+            if (resetUsername.value === savedUsername && securityQuestion.value.toLowerCase() === savedSecurityAnswer.toLowerCase()) {
+                alert('A password reset link has been sent to your email.');
+                forgotPasswordModal.classList.add('hidden');
+            } else {
+                alert('Username or security answer is incorrect.');
+            }
+        });
+
+        resetUsername.addEventListener('animationend', () => resetUsername.classList.remove('animate-shake'));
+        securityQuestion.addEventListener('animationend', () => securityQuestion.classList.remove('animate-shake'));
+    </script>
+</body>
+</html>
