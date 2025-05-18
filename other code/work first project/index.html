@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <title>Shenzhen Vocational College of Information</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .hover\:move-box {
+            transition: transform 0.5s ease;
+        }
+
+        .hover\:move-box:hover {
+            transform: translateY(-5px);
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .img11:hover {
+            filter: brightness(0) saturate(100%) invert(40%) sepia(100%) saturate(200%) hue-rotate(100deg) brightness(90%) contrast(90%);
+            transition: filter 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div id="app">
+        <!-- Navbar -->
+        <nav class="ml-14 sticky h-14 flex items-center justify-between bg-white px-4">
+            <div>
+                <p class="p-[1rem] cursor-pointer text-teal-700 ml-[2rem]">The class | Attended</p>
+                <div class="bg-teal-900 w-[3rem] h-[3px] mt-[-6px] ml-14"></div>
+            </div>
+            <div>
+                <p @click="toggleArchive" class="p-[1rem] cursor-pointer text-gray-400 flex items-center">
+                    My Archive
+                    <span class="ml-2 bg-teal-500 text-white px-2 py-1 rounded-full text-xs">{{ archivedCourses.length }}</span>
+                </p>
+            </div>
+        </nav>
+
+        <hr class="border-b-1 border-gray-200"/>
+
+        <nav class="sidebar">
+            <div class="w-[4.4rem] flex flex-col justify-between fixed top-0 left-0 bottom-0 bg-teal-900 overflow-y-auto z-10" id="divleft">
+                <div>
+                    <div class="hover:bg-teal-950">
+                        <a href="main.html"><img class="rounded-full pl-3 pr-3 pt-3 pb-2" src="img/default_new_logo_pic.png" alt="img"></a>
+                    </div>
+                    <div class="pl-3 pr-2 p-4 bg-teal-950 hover:bg-teal-950">
+                        <img class="justify-self-center  w-6" src="img/img2.svg" alt="img">
+                        <p class="text-white ml-[-5px] pl-2 text-[10px]">Teaching</p>
+                        <p class="text-white ml-[-5px] text-[10px]">Management</p>
+                    </div>
+                </div>
+                <div class="pl-3 pr-3 pt-3 pb-2 hover:bg-transparent h-[13rem] bg-transparent"></div>
+                <div class="relative top-[10rem]">
+                    <img class="p-6 mt-10 img11" src="img/update.svg" alt="img">
+                </div>
+                <div>
+                    <hr class="border-cyan-950 mt-[10rem] w-8 mx-auto">
+                    <div class="justify-between justify-self-center pt-10 relative">
+                        <img class="rounded-full w-8 mb-5 h-8 bg-teal-100 border-[1px] border-white" src="img/img logo.webp" alt="">
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <form id="searchForm" class="ml-[6.5rem] w-[19rem] h-[2.3rem] mt-[1.5rem]" @submit.prevent="searchCourses">
+            <input id="searchInput" class="border-[1px] border-gray-300 outline-0 w-[12.6rem] h-[2rem] ml-[3rem] ps-[20px] mt-3 rounded-sm" type="text" placeholder="Search Courses" v-model="searchQuery">
+            <button type="submit" class="relative left-[1.05rem] top-[-1.5rem] border-[1px] border-gray-300 flex align-center justify-center pt-[4px] pr-[5px] h-[2.0rem] w-[2rem] mt-[-0.5rem]">
+                <img class="bg-transparent pl-1 buttonimg2" src="img/search_25dp_BBCCCC_FILL0_wght400_GRAD0_opsz24.svg" alt=""/>
+            </button>
+        </form>
+
+        <!-- Course Cards -->
+        <div class="mt-[2.5rem] mr-[4rem] ml-[6rem] mb-[4rem] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div v-for="(course, index) in filteredCourses" :key="index" class="bg-gradient-to-r from-green-400 to-teal-500 p-4 shadow-md rounded-md hover:move-box">
+                <a :href="`content.html?title=${encodeURIComponent(course.title)}&description=${encodeURIComponent(course.description)}`" class="block">
+                    <div class="flex justify-between h-[5rem]">
+                        <h2 class="text-white font-bold text-xl">{{ course.title }}</h2>
+                        <div class="tooltip" @click.stop="archiveCourse(index, $event)">
+                            <span class="text-white hover:pop"><i class="fas fa-archive"></i></span>
+                            <span class="tooltip-text">Archive</span>
+                        </div>
+                    </div>
+                    <p class="text-sm text-white mt-2">{{ course.description }}</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Archived Courses -->
+        <div v-if="showArchive && archivedCourses.length > 0" class="absolute top-16 left-[10rem] bg-green-200 w-[58rem] p-8 rounded mt-8 mb-[8rem] ml-[6rem]">
+            <div class="grid grid-cols-2 justify-between">
+                <button @click="toggleArchive" class="text-xl text-right text-green-900">Hide</button>
+            </div>
+            <h2 class="text-teal-700 text-xl mt-4">Archived Courses</h2>
+            <div v-for="(course, index) in archivedCourses" :key="index" class="bg-gray-200 p-4 shadow-md rounded-md mt-4">
+                <div class="flex justify-between">
+                    <div>
+                        <h2 class="text-gray-800 font-bold">{{ course.title }}</h2>
+                        <p class="text-sm text-gray-600">{{ course.description }}</p>
+                    </div>
+                    <button @click="unarchiveCourse(index)" class="bg-red-500 text-white px-4 py-2 rounded">Return to Main</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+        <script>
+            new Vue({
+                el: '#app',
+                data: {
+                    courses: [
+                        { title: 'Operating System', description: '2024 Fall - Software Technology Class' },
+                        { title: 'Graphic Design', description: '2024 Fall - Software Technology Class' },
+                        { title: 'HTML5 Development', description: '2024 Fall - Software Technology Class' },
+                        { title: 'JavaScript Basics', description: 'Learn foundational JavaScript skills' },
+                        { title: 'SQL for Beginners', description: 'Master basic database querying' },
+                        { title: 'Advanced Java', description: 'Core and advanced Java concepts' },
+                        { title: 'Machine Learning Application Technology', description: 'Learn the application of machine learning techniques' },
+                        { title: 'Advanced Android Development', description: 'Take your Android development skills to the next level' },
+                        { title: 'China\'s ICT technology and industry', description: 'Explore the technology and industries shaping China\'s economy' }
+                    ],
+                    archivedCourses: [],
+                    showArchive: false,
+                    searchQuery: ''
+                },
+                computed: {
+                    filteredCourses() {
+                        return this.courses.filter(course => {
+                            return course.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+                                   course.description.toLowerCase().includes(this.searchQuery.toLowerCase());
+                        });
+                    }
+                },
+                methods: {
+                    archiveCourse(index, event) {
+                        event.preventDefault(); // Prevent the link from navigating
+                        const course = this.courses.splice(index, 1)[0];
+                        this.archivedCourses.push(course);
+                    },
+                    unarchiveCourse(index) {
+                        const course = this.archivedCourses.splice(index, 1)[0];
+                        this.courses.push(course);
+                    },
+                    toggleArchive() {
+                        this.showArchive = !this.showArchive;
+                    },
+                    searchCourses() {
+                        // Custom search logic if required
+                    }
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>

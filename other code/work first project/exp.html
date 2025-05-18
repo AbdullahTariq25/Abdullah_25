@@ -1,0 +1,531 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About SZIIT</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <style>
+            @media (max-width: 768px) {
+                .nav-links {
+                    display: none;
+                }
+                .nav-links.active {
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    background-color: white;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                }
+                .container {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+            }
+            @media (max-width: 640px) {
+                .nav-links {
+                    display: none;
+                }
+                .nav-links.active {
+                    display: flex;
+                    flex-direction: column;
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    background-color: white;
+                    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                }
+                .container {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+                .nav-links {
+                    margin-left: 0;
+                    margin-right: 0;
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-gray-100 text-gray-800">
+
+        <nav class="sticky top-0 bg-white shadow-md z-50">
+            <div class="container mx-auto flex items-center justify-between py-4 px-8">
+                <!-- Logo -->
+                <a href="main.html" class="flex-shrink-0">
+                    <img src="img/default_name_pic.png" alt="Logo" class="ml-0 w-32">
+                </a>
+
+                <!-- Navigation Links -->
+                <div :class="['nav-links', menuActive ? 'active' : ''] flex items-center ml-[20rem] mr-[3rem] space-x-6 md:space-x-6">
+                    <a href="main.html" class="text-base text-gray-500 hover:text-blue-700">Front Page</a>
+                    <a href="exp.html" class="text-base text-blue-600 hover:text-blue-700">All Courses</a>
+                </div>
+
+                <!-- Hamburger Menu -->
+                <div class="md:hidden flex items-center">
+                    <button @click="toggleMenu" class="text-gray-600 hover:text-blue-500 focus:outline-none">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+
+                <!-- Search Bar -->
+                <form @submit.prevent="searchCourses" class="flex items-center h-[2.2rem] border rounded-sm px-3 py-1 w-42">
+                    <input 
+                        type="text" 
+                        v-model="searchQuery" 
+                        placeholder="Search Courses" 
+                        class="outline-none flex-grow text-gray-700 text-sm" 
+                    />
+                    <button type="submit">
+                        <img src="img/search blue.svg" alt="Search" class="w-5 h-5" />
+                    </button>
+                </form>
+
+                <!-- Download Button with Tooltip -->
+                <div class="relative group">
+                    <button class="text-base text-gray-600 hover:text-blue-500">Download the App</button>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 mb-2 bg-gray-800 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                        <img src="img/QR code.png" alt="QR Code" class="w-[10rem]" />
+                    </div>
+                </div>
+
+                <!-- User Profile -->
+                <img src="img/img logo.webp" alt="User Profile" class="w-8 h-8 rounded-full border mr-6 border-gray-200 ml-6" />
+
+                <!-- Study Space -->
+                <a href="index.html" class="bg-white border border-blue-400 text-blue-500 hover:bg-blue-400 hover:text-white px-4 py-1 rounded transition">Study Space</a>
+            </div>
+        </nav>
+
+        <div id="app" class="relative">
+            <img alt="Background image of an open book with a pen" class="w-full h-[22rem] object-cover" src="https://thumbs.dreamstime.com/b/pen-sitting-top-open-book-black-gold-to-page-writing-concept-focus-concentration-as-334414641.jpg" />
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+            <div class="absolute inset-0 flex flex-col items-start justify-center text-white p-8 md:p-[9rem]">
+                <h1 class="text-3xl mt-8 pt-2 mb-4 font-bold">
+                    {{ course.title }}
+                </h1>
+                <div class="flex space-x-4 mt-4">
+                    <span class="bg-gray-800 px-3 py-1 rounded-full">
+                        {{ course.selected }} people have joined
+                    </span>
+                    <span class="bg-gray-800 px-3 py-1 rounded-full">
+                        {{ course.views }} views
+                    </span>
+                </div>
+                <div class="mt-4">
+                    <select class="bg-transparent mt-4 border text-white px-4 py-2 rounded">
+                        <option>
+                            Spring 2025 - {{ course.title }}
+                        </option>
+                    </select>
+                </div>
+                <p class="mt-8">
+                    Course start time
+                </p>
+                <p class="mt-4">
+                    2025-01-31 to 2025-07-31
+                </p>
+                <div class="flex justify-end w-full">
+                    <button class="bg-gray-500 text-white px-4 mb-[4%] py-2 rounded">
+                        Teacher selection
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="text-center py-16">
+            <h2 class="text-2xl font-semibold">
+                Course Sections
+            </h2>
+            <p class="mt-4 text-gray-600">
+                There is no content yet
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-gray-300 w-full mt-[5rem] p-8 py-10">
+            <div class="container mx-auto px-4 text-left">
+                <h1 class="text-2xl font-semibold text-gray-300 mb-4">Shenzhen Vocational College of Information Technology</h1>
+                <div class="flex items-center mb-6">
+                    <div class="w-1 h-6 bg-blue-400 mr-2"></div>
+                    <p class="text-gray-400">Platform services and technical support</p>
+                </div>
+                <div class="flex flex-col md:flex-row justify-start items-start space-y-6 md:space-y-0 md:space-x-12">
+                    <div class="flex items-center space-x-2">
+                        <div class="border border-gray-400 p-4 rounded-full flex items-center justify-center w-16 h-16">
+                            <i class="fas fa-phone-alt text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-100">CALL</p>
+                            <p class="text-gray-300">400-689-1199</p>
+                            <p class="text-gray-300">010-8215-2530</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="border border-gray-400 p-4 rounded-full flex items-center justify-center w-16 h-16">
+                            <i class="fas fa-envelope text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-100">MAIL</p>
+                            <p class="text-gray-300">bsupport@xuetangx.com</p>
+                            <p class="text-gray-300">creditcourse@xuetangx.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="border border-gray-400 p-4 rounded-full flex items-center justify-center w-16 h-16">
+                            <i class="fas fa-clock text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-100">WORK TIME</p>
+                            <p class="text-gray-300">Working Day</p>
+                            <p class="text-gray-300">9:00-18:00</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6 border-gray-600">
+                <p class="text-left text-gray-500 text-sm">
+                    Copyright 2013-2024 Beijing ICP No. 14019655 | 
+                    <i class="fas fa-shield-alt text-orange-500"></i> 
+                    Beijing Public Security Network No. 11010802033052 | 
+                    Beijing Muhua Information Technology Co., Ltd.
+                </p>
+            </div>
+        </footer>
+        <script>
+            new Vue({
+              el: '#app',
+              data: {
+                searchQuery: '',
+                menuActive: false,
+                course: {
+                  id: 0,
+                  title: '',
+                  description: '',
+                  instructor: '',
+                  duration: 0,
+                  image: '',
+                  views: 0,
+                  selected: 0,
+                  credits: 0,
+                  category: '', // Added category property
+                },
+                courses: [
+                  {
+                    id: 1,
+                    title: 'Practical Chinese',
+                    description:
+                      'A public elective course aimed at improving language skills and cultural understanding.',
+                    instructor: 'Dr. Wang',
+                    duration: 30,
+                    views: 3258,
+                    selected: 7723,
+                    credits: 2,
+                    image:
+                      'https://www.allmandarin.com/wp-content/uploads/2014/03/Reception.jpg',
+                    category: 'Language', // Added category property
+                  },
+                  {
+                    id: 2,
+                    title: 'Military Theory',
+                    description:
+                      'A detailed exploration of military strategies and principles.',
+                    instructor: 'Col. Zhang',
+                    duration: 40,
+                    views: 1240,
+                    selected: 5454,
+                    credits: 2,
+                    image:
+                      'https://storage.googleapis.com/a1aa/image/gip5ovrUDOqNJ1lTbs5XxxJq34zEEnYfHQn0zCgPfud6oQCUA.jpg',
+                    category: 'Military', // Added category property
+                  },
+                  {
+                    id: 3,
+                    title: 'Introduction to Artificial Intelligence',
+                    description:
+                      'A detailed exploration of AI concepts and applications.',
+                    instructor: 'Dr. Li',
+                    duration: 50,
+                    views: 2500,
+                    selected: 3000,
+                    credits: 3,
+                    image:
+                      'https://miro.medium.com/v2/resize:fit:900/1*57YDg0EsnSBYsTnwYPkSDg.jpeg',
+                    category: 'Technology', // Added category property
+                  },
+                  {
+                    id: 4,
+                    title: 'Introduction to the Basic Principles of Marxism',
+                    description: 'An overview of Marxist theory and its applications.',
+                    instructor: 'Dr. Chen',
+                    duration: 45,
+                    views: 1800,
+                    selected: 2500,
+                    credits: 2,
+                    image:
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGOqnf0w-qoOTKaX8OoT6wswlmFVslX_Wj7Q&s',
+                    category: 'Philosophy', // Added category property
+                  },
+                  {
+                    id: 5,
+                    title: 'Applied Mathematics',
+                    description: 'Advanced mathematical concepts and their applications.',
+                    instructor: 'Prof. Zhao',
+                    duration: 55,
+                    views: 3000,
+                    selected: 4000,
+                    credits: 4,
+                    image:
+                      'https://s3-ap-south-1.amazonaws.com/ricedigitals3bucket/AUPortalContent/2020/07/10101336/imgblogmaths3.jpg',
+                    category: 'Mathematics', // Added category property
+                  },
+                  {
+                    id: 6,
+                    title: 'Practical Writing',
+                    description: 'Skills and techniques for effective writing.',
+                    instructor: 'Dr. Wang',
+                    duration: 35,
+                    views: 2200,
+                    selected: 3500,
+                    credits: 2,
+                    image:
+                      'https://s39613.pcdn.co/wp-content/uploads/2020/05/Six-Practical-Approaches-for-Teaching-Writing-Online.jpg',
+                    category: 'Language', // Added category property
+                  },
+                  {
+                    id: 7,
+                    title: 'Outing and Switching Equipment Management',
+                    description: 'Management of outdoor and switching equipment.',
+                    instructor: 'Col. Zhang',
+                    duration: 40,
+                    views: 1500,
+                    selected: 2000,
+                    credits: 2,
+                    image:
+                      'https://www.cisco.com/c/dam/assets/swa/img/anchor-info/what-is-network-switching-628x353.png',
+                    category: 'Technology', // Added category property
+                  },
+                  {
+                    id: 8,
+                    title: 'Font Design',
+                    description: 'Designing and creating fonts.',
+                    instructor: 'Dr. Li',
+                    duration: 45,
+                    views: 1900,
+                    selected: 2400,
+                    credits: 3,
+                    image:
+                      'https://miro.medium.com/v2/resize:fit:1400/1*coEM-LSsVWqweKeWHYCMHg.jpeg',
+                    category: 'Art', // Added category property
+                  },
+                  {
+                    id: 9,
+                    title: 'Windows Operating System Server Management',
+                    description: 'Managing Windows server systems.',
+                    instructor: 'Prof. Zhao',
+                    duration: 50,
+                    views: 2800,
+                    selected: 3800,
+                    credits: 4,
+                    image:
+                      'https://d2cest1yk6hx2d.cloudfront.net/uninets-001/store/1619/blog/Learn-Windows-Server-Fundamentals.jpg',
+                    category: 'Technology', // Added category property
+                  },
+                ],
+              },
+              mounted() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const courseId = urlParams.get('id');
+                const course = this.courses.find((c) => c.id == courseId);
+                if (course) {
+                  this.course = course;
+                }
+              },
+              methods: {
+                searchCourses() {
+                  // Search functionality handled by the computed property
+                },
+                toggleMenu() {
+                  this.menuActive = !this.menuActive;
+                  const navLinks = document.querySelector('.nav-links');
+                  if (this.menuActive) {
+                    navLinks.classList.add('active');
+                  } else {
+                    navLinks.classList.remove('active');
+                  }
+                },
+              },
+            });
+          </script><script>
+  new Vue({
+    el: '#app',
+    data: {
+      searchQuery: '',
+      menuActive: false,
+      course: {
+        id: 0,
+        title: '',
+        description: '',
+        instructor: '',
+        duration: 0,
+        image: '',
+        views: 0,
+        selected: 0,
+        credits: 0,
+        category: '', // Added category property
+      },
+      courses: [
+        {
+          id: 1,
+          title: 'Practical Chinese',
+          description:
+            'A public elective course aimed at improving language skills and cultural understanding.',
+          instructor: 'Dr. Wang',
+          duration: 30,
+          views: 3258,
+          selected: 7723,
+          credits: 2,
+          image:
+            'https://www.allmandarin.com/wp-content/uploads/2014/03/Reception.jpg',
+          category: 'Language', // Added category property
+        },
+        {
+          id: 2,
+          title: 'Military Theory',
+          description:
+            'A detailed exploration of military strategies and principles.',
+          instructor: 'Col. Zhang',
+          duration: 40,
+          views: 1240,
+          selected: 5454,
+          credits: 2,
+          image:
+            'https://storage.googleapis.com/a1aa/image/gip5ovrUDOqNJ1lTbs5XxxJq34zEEnYfHQn0zCgPfud6oQCUA.jpg',
+          category: 'Military', // Added category property
+        },
+        {
+          id: 3,
+          title: 'Introduction to Artificial Intelligence',
+          description:
+            'A detailed exploration of AI concepts and applications.',
+          instructor: 'Dr. Li',
+          duration: 50,
+          views: 2500,
+          selected: 3000,
+          credits: 3,
+          image:
+            'https://miro.medium.com/v2/resize:fit:900/1*57YDg0EsnSBYsTnwYPkSDg.jpeg',
+          category: 'Technology', // Added category property
+        },
+        {
+          id: 4,
+          title: 'Introduction to the Basic Principles of Marxism',
+          description: 'An overview of Marxist theory and its applications.',
+          instructor: 'Dr. Chen',
+          duration: 45,
+          views: 1800,
+          selected: 2500,
+          credits: 2,
+          image:
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGOqnf0w-qoOTKaX8OoT6wswlmFVslX_Wj7Q&s',
+          category: 'Philosophy', // Added category property
+        },
+        {
+          id: 5,
+          title: 'Applied Mathematics',
+          description: 'Advanced mathematical concepts and their applications.',
+          instructor: 'Prof. Zhao',
+          duration: 55,
+          views: 3000,
+          selected: 4000,
+          credits: 4,
+          image:
+            'https://s3-ap-south-1.amazonaws.com/ricedigitals3bucket/AUPortalContent/2020/07/10101336/imgblogmaths3.jpg',
+          category: 'Mathematics', // Added category property
+        },
+        {
+          id: 6,
+          title: 'Practical Writing',
+          description: 'Skills and techniques for effective writing.',
+          instructor: 'Dr. Wang',
+          duration: 35,
+          views: 2200,
+          selected: 3500,
+          credits: 2,
+          image:
+            'https://s39613.pcdn.co/wp-content/uploads/2020/05/Six-Practical-Approaches-for-Teaching-Writing-Online.jpg',
+          category: 'Language', // Added category property
+        },
+        {
+          id: 7,
+          title: 'Outing and Switching Equipment Management',
+          description: 'Management of outdoor and switching equipment.',
+          instructor: 'Col. Zhang',
+          duration: 40,
+          views: 1500,
+          selected: 2000,
+          credits: 2,
+          image:
+            'https://www.cisco.com/c/dam/assets/swa/img/anchor-info/what-is-network-switching-628x353.png',
+          category: 'Technology', // Added category property
+        },
+        {
+          id: 8,
+          title: 'Font Design',
+          description: 'Designing and creating fonts.',
+          instructor: 'Dr. Li',
+          duration: 45,
+          views: 1900,
+          selected: 2400,
+          credits: 3,
+          image:
+            'https://miro.medium.com/v2/resize:fit:1400/1*coEM-LSsVWqweKeWHYCMHg.jpeg',
+          category: 'Art', // Added category property
+        },
+        {
+          id: 9,
+          title: 'Windows Operating System Server Management',
+          description: 'Managing Windows server systems.',
+          instructor: 'Prof. Zhao',
+          duration: 50,
+          views: 2800,
+          selected: 3800,
+          credits: 4,
+          image:
+            'https://d2cest1yk6hx2d.cloudfront.net/uninets-001/store/1619/blog/Learn-Windows-Server-Fundamentals.jpg',
+          category: 'Technology', // Added category property
+        },
+      ],
+    },
+    mounted() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const courseId = urlParams.get('id');
+      const course = this.courses.find((c) => c.id == courseId);
+      if (course) {
+        this.course = course;
+      }
+    },
+    methods: {
+      searchCourses() {
+        // Search functionality handled by the computed property
+      },
+      toggleMenu() {
+        this.menuActive = !this.menuActive;
+        const navLinks = document.querySelector('.nav-links');
+        if (this.menuActive) {
+          navLinks.classList.add('active');
+        } else {
+          navLinks.classList.remove('active');
+        }
+      },
+    },
+  });
+</script>
+    </body>
+    </html>

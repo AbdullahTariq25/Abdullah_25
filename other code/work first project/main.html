@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <title>Shenzhen Vocational College of Information</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div id="app">
+        <!-- Navigation Bar -->
+        <navigation-bar></navigation-bar>
+
+        <!-- Hero Section -->
+        <section class=" ml-[2rem]  mr-[2rem]">
+            <img 
+                src="img/school.png" 
+                alt="Shenzhen Vocational College" 
+                class="w-full  object-cover px-8 "
+            />
+        </section>
+
+        <!-- Announcements -->
+        <section class="mt-8 px-8">
+            <div class="flex items-center justify-between m-l[20rem]   text-gray-600 text-2xl   pl-[4rem] mt-[4rem] mr-[25rem]">
+                <h1>Announcement</h1>
+                <h1>Notify</h1>
+            </div>
+            <div class="flex items-center justify-between m-l[20rem]  text-gray-600  pl-[14rem] mt-[4rem] mb-[5rem] mr-[10rem]">
+                <p>There is no announcement yet!</p>
+                <p>There is no announcement yet!</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer-section></footer-section>
+    </div>
+
+    <script>
+        // Navigation Bar Component
+        const NavigationBar = {
+            template: `
+                <nav class="sticky top-0 bg-white shadow-md  z-50">
+                    <div class="container mx-auto flex items-center justify-between py-4 px-8">
+                        <!-- Logo -->
+                        <a href="main.html" class="flex-shrink-0">
+                            <img src="img/default_name_pic.png" alt="Logo" class="ml-[rem] w-32">
+                        </a>
+
+                        <!-- Navigation Links -->
+                        <div class="flex items-center ml-[20rem] mr-[3rem] space-x-6">
+                            <a 
+                                href="main.html" 
+                                class="text-base text-blue-500 hover:text-blue-700">
+                                Front Page
+                            </a>
+                            
+                            <a 
+                                href="all cource.html" 
+                                class="text-base text-gray-600 hover:text-blue-700">
+                                All Courses
+                            </a>
+                        </div>
+
+                        <!-- Search Bar -->
+                        <form 
+                            class="flex items-center h-[2.2rem] border rounded-sm   px-3 py-1 w-42">
+                            <input 
+                                type="text" 
+                                placeholder="Search Courses" 
+                                class="outline-none flex-grow text-gray-700 text-sm" 
+                            />
+                            <button type="submit">
+                                <img 
+                                    src="img/search blue.svg" 
+                                    alt="Search" 
+                                    class="w-5 h-5" 
+                                />
+                            </button>
+                        </form>
+
+                        <!-- Download Button with Tooltip -->
+                        <div class="relative group  ">
+                            <button 
+                                class="text-base text-gray-600  hover:text-blue-500">
+                                Download the App
+                            </button>
+                            <div 
+                                class="absolute  left-1/2 transform -translate-x-1/2 mb-2 bg-gray-800 text-white p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                <img 
+                                    src="img/QR code.png" 
+                                    alt="QR Code" 
+                                    class="w-[10rem] " 
+                                />
+                            </div>
+                        </div>
+
+                        <!-- User Profile -->
+                        <img 
+                            src="img/img logo.webp" 
+                            alt="User Profile" 
+                            class="w-8 h-8 rounded-full border border-gray-200 mr-6 ml-6" 
+                        />
+
+                        <!-- Study Space -->
+                        <a 
+                            href="index.html" 
+                            class="bg-white border border-blue-400 text-blue-500 hover:bg-blue-400 hover:text-white px-4 py-1 rounded transition">
+                            Study Space
+                        </a>
+                    </div>
+                </nav>
+            `,
+        };
+
+        // Footer Component
+        const FooterSection = {
+            template: `
+              <!-- Footer -->
+        <footer class="bg-gray-800 text-gray-300 py-10">
+            <div class="container mx-auto px-4 text-left">
+                <h1 class="text-2xl font-semibold text-gray-300  mb-4">Shenzhen Vocational College of Information Technology</h1>
+                <div class="flex items-center mb-6">
+                    <div class="w-1 h-6 bg-blue-400 mr-2"></div>
+                    <p class="text-gray-400">Platform services and technical support</p>
+                </div>
+                <div class="flex flex-col md:flex-row justify-start items-start space-y-6 md:space-y-0 md:space-x-12">
+                    <div class="flex items-center space-x-2">
+                        <div class="border border-gray-400 p-4 rounded-full flex items-center justify-center w-16 h-16">
+                            <i class="fas fa-phone-alt text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-100">CALL</p>
+                            <p class="text-gray-300">400-689-1199</p>
+                            <p class="text-gray-300">010-8215-2530</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="border border-gray-400 p-4 rounded-full flex items-center justify-center w-16 h-16">
+                            <i class="fas fa-envelope text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-100">MAIL</p>
+                            <p class="text-gray-300">bsupport@xuetangx.com</p>
+                            <p class="text-gray-300">creditcourse@xuetangx.com</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="border border-gray-400 p-4 rounded-full flex items-center justify-center w-16 h-16">
+                            <i class="fas fa-clock text-2xl text-white"></i>
+                        </div>
+                        <div>
+                            <p class="text-sm text-gray-100">WORK TIME</p>
+                            <p class="text-gray-300">Working Day</p>
+                            <p class="text-gray-300text-gray-300">9:00-18:00</p>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-6 border-gray-600">
+                <p class="text-left text-gray-500 text-sm">
+                    Copyright 2013-2024 Beijing ICP No. 14019655 | 
+                    <i class="fas fa-shield-alt text-orange-500"></i> 
+                    Beijing Public Security Network No. 11010802033052 | 
+                    Beijing Muhua Information Technology Co., Ltd.
+                </p>
+            </div>
+        </footer>    </div>
+`,
+        };
+
+        const app = Vue.createApp({});
+        app.component('navigation-bar', NavigationBar);
+        app.component('footer-section', FooterSection);
+        app.mount('#app');
+    </script>
+</body>
+</html>
