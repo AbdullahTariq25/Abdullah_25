@@ -29,8 +29,8 @@
 }
 
 .submit {
-    width: 10rem;
-    margin-left: 5rem;
+    width: clamp(8rem, 10rem, 12rem);
+    margin-left: clamp(1rem, 5rem, 8rem);
     background-color: rgb(54, 236, 136);
     transition: transform .5s ease;
     transform: scale(1);
@@ -55,6 +55,7 @@
 }
 
 .input {
+    width: clamp(16rem, 100%, 30rem);
     transform: scale(1.0);
     border-width: .1rem;
     border-color: black;
@@ -71,19 +72,18 @@
 }
 
 .textarea {
+    width: clamp(16rem, 100%, 30rem);
+    min-height: clamp(10rem, 15rem, 20rem);
     border-width: .1rem;
     border-color: black;
     transform: scale(1);
     transition: transform .5s ease;
+    padding-top: .6rem;
 }
 
 .textarea:active {
     border: none;
     border-style: none;
-}
-
-.textarea {
-    padding-top: .6rem;
 }
 
 .abdullah {
@@ -181,4 +181,14 @@ body {
 
 .strong:hover {
     color: rgb(14, 131, 127);
+}
+
+@media (max-width: 768px) {
+    .h1 {
+        font-size: clamp(2rem, 2.5rem, 3rem);
+    }
+    .submit {
+        width: 100%;
+        margin-left: 0;
+    }
 }
